@@ -16,7 +16,9 @@ const { title = "PokeAPi" } = Astro.props;
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
   </head>
-  <body class="bg-slate-800 text-slate-100 max-w-3xl mx-auto">
-    <slot />
+  <body class="bg-slate-800 text-slate-100 max-w-5xl mx-auto">
+    <main class="p-4">
+      <slot />
+    </main>
   </body>
 </html>
