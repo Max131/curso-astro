@@ -1,20 +1,48 @@
 ---
 import type { GetStaticPaths } from "astro";
 import Layout from "@layouts/Default.astro";
+import PokemonCard from "@components/pokemons/PokemonCard.astro";
 
 export const getStaticPaths = (() => {
   return [
-    { params: { name: "bulbasaur" } },
-    { params: { name: "charmander" } },
+    {
+      params: {
+        name: "bulbasaur",
+      },
+      props: {
+        name: "bulbasaur",
+        url: "https://pokeapi.co/api/v2/pokemon/1/",
+      },
+    },
+    {
+      params: {
+        name: "charmander",
+      },
+      props: {
+        name: "charmander",
+        url: "https://pokeapi.co/api/v2/pokemon/4/",
+      },
+    },
   ];
 }) satisfies GetStaticPaths;
 
 const { name } = Astro.params;
+const { url } = Astro.props;
+
+const id = url.split("/").at(-2);
+const sound = `https://raw.githubusercontent.com/PokeAPI/cries/main/cries/pokemon/latest/${id}.ogg`;
 ---
 
 <Layout title="Pokemón X">
   <section class="mt-10 mx-10 flex flex-col justify-center items-center">
-    <a href="/" class="hover:underline text-blue-500">Regresar</a>
-    <h1 class="text-5xl capitalize">{name}</h1>
+    <article>
+      <a href="/" class="hover:underline text-blue-500">Regresar</a>
+      <h1 class="text-5xl capitalize">{name}</h1>
+      <PokemonCard {name} {url} />
+      <audio controls class="mt-5 mx-auto rounded-xl">
+        <source src={sound} type="audio/ogg" />
+        Your browser doesn't support this audio format.
+      </audio>
+    </article>
   </section>
 </Layout>
